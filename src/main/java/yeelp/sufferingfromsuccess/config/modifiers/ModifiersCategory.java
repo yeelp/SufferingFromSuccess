@@ -50,9 +50,9 @@ public class ModifiersCategory {
 	@Comment("Change the modifiers that affect only Skeleton based entities")
 	public SkeletonCategory skeletons = new SkeletonCategory();
 	
-	@Name("Endermen")
-	@Comment("Change the modifiers that affect only Enderman based entities")
-	public EndermanCategory endermen = new EndermanCategory();
+	@Name("Blazes")
+	@Comment("Change the modifiers that affect only Blaze based entities")
+	public BlazeCategory blazes = new BlazeCategory();
 
 	@Name("Shared")
 	@Comment("Change the modifiers that affect certain groups of entities")
@@ -183,6 +183,10 @@ public class ModifiersCategory {
 				"(A higher number here indicates a lower percentage chance)"})
 		@RangeDouble(min = 0.0)
 		public double zombieBreakDoorModifier = 3.0;
+		
+		@Name("Reinforcements Receive Reinforcements Buff")
+		@Comment("If true, Zombies summoned via reinforcements will also receive a bonus to their reinforcement chance. This can quickly spiral out of control with enough Zombies killed.")
+		public boolean zombieReinforcementsGetReinforcementsBuff = false;
 	}
 
 	public class SpiderCategory {
@@ -288,15 +292,15 @@ public class ModifiersCategory {
 		public double skeletonFireRateModifier = 5.0;
 	}
 	
-	public class EndermanCategory {
-		@Name("Block Manipulation Chance Increase")
+	public class BlazeCategory {
+		@Name("Blaze Fire Rate")
 		@Comment({
-			"Specifies how much more often Endermen manipulate the blocks around them based on the number of deaths.",
-			"The exact formula is d*x where x is the number of times this mob type has died and d is the value defined here.",
-			"The result is subtracted from the base chance of manipulating a block and capped at 100%"
+			"Specifies how fast Blazes shoot based on the number of deaths.",
+			"The exact formula is d*log(x+1) where x is the number of times this mob type has died and d is the value defined here.",
+			"The result is used as the base fire rate for the Blaze, to a minimum of 1 tick, and modified depending on where in their attack cycle they are."
 		})
 		@RangeDouble(min = 0.0)
-		public double endermanBlockManipChanceModifier = 5.0;
+		public double blazeFireRateModifier = 0.6;
 	}
 
 	public class SharedCategory {

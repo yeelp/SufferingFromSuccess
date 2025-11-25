@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import yeelp.sufferingfromsuccess.api.capability.BlazeFireballRate;
 import yeelp.sufferingfromsuccess.api.capability.GuardianAttackSpeedModifier;
 import yeelp.sufferingfromsuccess.api.capability.ModifierValue;
 import yeelp.sufferingfromsuccess.api.capability.SFSDeathTrackingData;
@@ -73,6 +74,10 @@ public abstract class SFSAPI {
 	
 	public static Optional<SkeletonFireRate> getSkeletonFireRate(EntityLivingBase entity) {
 		return getCapability(entity, SkeletonFireRate.cap);
+	}
+	
+	public static Optional<BlazeFireballRate> getBlazeFireRate(EntityLivingBase entity) {
+		return getCapability(entity, BlazeFireballRate.cap);
 	}
 	
 	private static <T extends Number, NBT extends NBTPrimitive, M extends ModifierValue<T, NBT>> Optional<M>  getCapability(EntityLivingBase entity, Capability<M> cap) {

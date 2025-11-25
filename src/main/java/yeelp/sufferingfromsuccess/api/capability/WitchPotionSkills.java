@@ -18,9 +18,9 @@ public final class WitchPotionSkills extends AbstractByteModifierValue {
 	
 	public static final ResourceLocation LOC = new ResourceLocation(ModConsts.MODID, "witchpotionskills");
 	
-	private static final byte REGEN_FLAG = (byte) 0x1;
-	private static final byte INVIS_FLAG = (byte) 0x10;
-	private static final byte ENHANCE_FLAG = (byte) 0x100;
+	private static final byte REGEN_FLAG = (byte) 0b1;
+	private static final byte INVIS_FLAG = (byte) 0b10;
+	private static final byte ENHANCE_FLAG = (byte) 0b100;
 	
 	private static final Multimap<PotionType, PotionType> ENHANCE_POTION_MAP = MultimapBuilder.hashKeys().arrayListValues().build();
 	
@@ -84,7 +84,8 @@ public final class WitchPotionSkills extends AbstractByteModifierValue {
 	public static PotionType enhancePotion(PotionType type) {
 		Collection<PotionType> types = ENHANCE_POTION_MAP.get(type);
 		int choice = SFSRNG.getRandomInt(types.size());
-		return types.stream().skip(choice).findFirst().orElse(type);
+		PotionType newType = types.stream().skip(choice).findFirst().orElse(type);
+		return newType;
 	}
 	
 	private void allow(byte flag) {

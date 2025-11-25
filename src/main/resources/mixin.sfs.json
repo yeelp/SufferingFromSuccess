@@ -10,7 +10,9 @@
         "MixinEntitySlime",
         "MixinASMEntitySlime",
         "MixinEntityWitch",
-        "MixinAbstractSkeleton"
+        "MixinAbstractSkeleton",
+        "MixinBlazeFireballAttack",
+        "MixinEntityZombie"
     ],
     "client": [
 

@@ -7,6 +7,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.AbstractSkeleton;
+import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.entity.monster.EntityGhast;
@@ -21,6 +22,7 @@ import yeelp.sufferingfromsuccess.lib.IDeathCountModifier;
 import yeelp.sufferingfromsuccess.lib.impl.modifiers.AbsorptionModifier;
 import yeelp.sufferingfromsuccess.lib.impl.modifiers.ArmorModifier;
 import yeelp.sufferingfromsuccess.lib.impl.modifiers.AttackModifier;
+import yeelp.sufferingfromsuccess.lib.impl.modifiers.BlazeFireRateModifier;
 import yeelp.sufferingfromsuccess.lib.impl.modifiers.CreeperExplosionPower;
 import yeelp.sufferingfromsuccess.lib.impl.modifiers.CreeperPoweredChance;
 import yeelp.sufferingfromsuccess.lib.impl.modifiers.EndermiteLifetimeModifier;
@@ -89,5 +91,6 @@ public abstract class SFSRegistries {
 		addBasicRegistry(EntitySlime.class, new SlimeSizeModifier());
 		addBasicRegistry(EntityWitch.class, new WitchDrinkInvisModifier(), new WitchDrinkRegenModifier(), new WitchDrinkSpeedIncrease(), new WitchUseEnhancedPotionsModifier());
 		addBasicRegistry(AbstractSkeleton.class, new SkeletonFireRateModifier());
+		addBasicRegistry(EntityBlaze.class, new BlazeFireRateModifier());
 	}
 }

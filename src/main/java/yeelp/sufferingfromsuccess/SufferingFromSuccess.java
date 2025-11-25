@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import yeelp.sufferingfromsuccess.api.capability.BlazeFireballRate;
 import yeelp.sufferingfromsuccess.api.capability.GuardianAttackSpeedModifier;
 import yeelp.sufferingfromsuccess.api.capability.SFSDeathTrackingData;
 import yeelp.sufferingfromsuccess.api.capability.SkeletonFireRate;
@@ -53,6 +54,7 @@ public class SufferingFromSuccess {
 		SkeletonFireRate.register();
 		WitchPotionSkills.register();
 		WitchDrinkSpeedModifier.register();
+		BlazeFireballRate.register();
 		new yeelp.sufferingfromsuccess.handler.EventHandler().register();
 		new EntityCapabilityHandler().register();
 	}
