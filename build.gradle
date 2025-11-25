@@ -1,0 +1,151 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://repo.spongepowered.org/maven' }
+        maven { url = 'https://plugins.gradle.org/m2/' }
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7.+'
+        classpath 'gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'com.github.johnrengelman.shadow'
+        
+version = mod_version
+group = 'yeelp.${mod_id}'
+archivesBaseName = mod_id
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+
+minecraft {
+    mappings channel: mappings_channel, version: mappings_version
+    
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+
+        server {
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
+}
+
+sourceSets.main.java.srcDirs += 'java'
+
+repositories {
+    maven { url = 'https://www.cursemaven.com' }
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    shadow 'io.github.llamalad7:mixinextras-common:0.3.5'
+
+    shadow 'org.spongepowered:mixin:0.8.7'
+    annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
+}
+
+mixin {
+    add sourceSets.main, "mixins.${mod_id}.refmap.json"
+}
+
+processResources {
+    var replaceProperties = [
+        'mod_id': mod_id,
+        'mod_name': mod_name,
+        'version': mod_version,
+        'mcversion': minecraft_version,
+        'mod_description': mod_description,
+        'mod_author_list': mod_author_list
+    ]
+    
+    inputs.properties replaceProperties
+    
+    filesMatching('mcmod.info') {
+        expand replaceProperties
+    }
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+task processSources(type: Sync) {
+    from sourceSets.main.java
+    inputs.property 'version', project.version
+    filter(ReplaceTokens, tokens:[version: version.toString()])
+    into 'build/src'
+}
+
+compileJava {
+    source = processSources.outputs
+}
+
+java {
+    withSourcesJar()
+}
+
+
+shadowJar {
+    configurations = [project.configurations.shadow]
+    mergeServiceFiles()
+
+    exclude 'org/spongepowered/asm/launch/MixinLaunchPlugin*'
+    exclude 'org/spongepowered/asm/launch/MixinTransformationService*'
+    exclude 'org/spongepowered/asm/launch/platform/container/ContainerHandleModLauncherEx*'
+    
+    exclude 'LICENSE.txt'
+
+    archiveClassifier.set('')
+}
+
+reobf {
+    shadowJar {}
+}
+
+task signJars(dependsOn: reobfShadowJar) {
+    doLast {
+        signJar(jar.archivePath)
+        signJar(shadowJar.archivePath)
+    }
+}
+
+def signJar(path) {
+    def alias = project.property("$alias")
+    def keyStore = project.property("$keyStore")
+    def storePass = project.property("$storePass")
+    def execLine = "jarsigner -keystore " + "$keyStore" + " -storepass " + "$storePass" + " " + path + " " + "$alias"
+    execLine.execute()
+}
+
+jar {
+    manifest.attributes(
+        "Specification-Title": mod_name,
+        "Specification-Vendor": mod_author,
+        "Specification-Version": "1",
+        "Implementation-Title": mod_name,
+        "Implementation-Version": mod_version,
+        "Implementation-Vendor" : mod_author,
+        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+        "FMLCorePlugin": "${mixin_loader_class}",
+        "FMLCorePluginContainsFMLMod": "true",
+        "ForceLoadAsMod": "true",
+        "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+        "TweakOrder": 0
+    )
+    
+    archiveClassifier.set('THIN')
+}
+
+build.dependsOn(shadowJar)
+jar.finalizedBy('reobfJar')
+reobfShadowJar.doLast {
+    signJar(shadowJar.archivePath)
+}
+

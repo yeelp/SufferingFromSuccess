@@ -1,0 +1,21 @@
+{
+    "required": true,
+    "minVersion": "0.7",
+    "package": "yeelp.sufferingfromsuccess.mixin",
+    "refmap": "mixins.sufferingfromsuccess.refmap.json",
+    "compatibilityLevel": "JAVA_8",
+    "target": "@env(DEFAULT)",
+    "mixins": [
+        "MixinEntityGuardian",
+        "MixinEntitySlime",
+        "MixinASMEntitySlime",
+        "MixinEntityWitch",
+        "MixinAbstractSkeleton"
+    ],
+    "client": [
+
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
