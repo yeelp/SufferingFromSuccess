@@ -5,6 +5,15 @@
 
 (Supporting me on Kofi or Patreon helps me develop mods full time!)
 
+[![](https://img.shields.io/modrinth/dt/4Bd39hqO?style=flat&logo=modrinth&label=Modrinth%20Downloads&color=00af5c)](https://modrinth.com/mod/sufferingfromsuccess)
+[![](https://img.shields.io/curseforge/dt/1394461?style=flat&logo=curseforge&label=CurseForge%20Downloads&color=f16436)](https://www.curseforge.com/minecraft/mc-mods/sufferingfromsuccess)
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/yeelp/SufferingFromSuccess/total?style=flat&logo=github&label=GitHub%20Downloads&color=white)](https://github.com/yeelp/SufferingFromSuccess/releases)
+[![Discord](https://img.shields.io/discord/750481601107853373?style=flat&logo=discord&logoColor=white&color=5662f6)](https://discord.gg/hwzWdXQ)
+![](https://img.shields.io/github/v/release/yeelp/SufferingFromSuccess?include_prereleases)
+[![](https://img.shields.io/github/issues/yeelp/SufferingFromSuccess)](https://github.com/yeelp/SufferingFromSuccess/issues) 
+
+![Modrinth Game Versions](https://img.shields.io/modrinth/game-versions/4Bd39hqO?style=flat&logo=modrinth&label=Available%20For&color=00af5c) ![CurseForge Game Versions](https://img.shields.io/curseforge/game-versions/1394461?style=flat&logo=curseforge&label=Available%20For&color=f16436)
+
 This mod was developed for the 2025 1.12 Modding Coalition Mod Jam!
 
 Minecraft mod where the more a mob dies, the stronger they get!
